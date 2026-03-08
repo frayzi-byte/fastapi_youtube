@@ -25,4 +25,4 @@ def get_latest_item():
 def get_item_by_id(item_id : int):
     for item in items:
         if item["id"] == item_id:
-            return {item}
+            return item
