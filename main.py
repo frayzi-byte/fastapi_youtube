@@ -1,17 +1,16 @@
-from typing import Annotated
-from fastapi import FastAPI, Body, Path
-from pydantic import BaseModel, EmailStr
-import sqlite3
-
+from fastapi import FastAPI
 import uvicorn
 
-conn = sqlite3.connect("database.db")
-cursor = conn.cursor()
-
-from routes.routes_items import router as items_router
+from controllers.items_controller import router as items_router
+from database.connection import init_db
 
 app = FastAPI()
 app.include_router(items_router)
+
+
+@app.on_event("startup")
+def startup() -> None:
+    init_db()
 
 @app.get("/")
 def hello_world():
