@@ -1,12 +1,13 @@
 from typing import Annotated
 from fastapi import APIRouter, Path
-from main import items
 from schemas.itemSchemas import CreateItem
+from data import items
 
 router = APIRouter(prefix="/items", tags=["Items"])
 
-@router.add("/")
+@router.post("/")
 def add_item(new_item : CreateItem):
+    items.append(new_item)
     return {
         "message" : "Success!",
         "id": new_item.id,
