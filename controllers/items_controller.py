@@ -1,28 +1,20 @@
-from fastapi import APIRouter
-from schemas.itemSchemas import CreateItem
+from schemas.itemSchemas import ItemCreate, ItemRead
 from services.items_service import ItemsService
-from responses.base_response import ok
 
-router = APIRouter(prefix="/items", tags=["Items"])
 service = ItemsService()
 
 
-@router.post("/")
-def add_item(new_item: CreateItem):
-    created_item = service.create_item(new_item)
-    return ok(created_item)
+def create_item(new_item: ItemCreate) -> ItemRead:
+    return service.create_item(new_item)
 
 
-@router.get("/")
-def list_items():
-    return ok(service.list_items())
+def list_items(limit: int, offset: int) -> list[ItemRead]:
+    return service.list_items(limit=limit, offset=offset)
 
 
-@router.get("/latest/")
-def get_latest_item():
-    return ok(service.latest_item())
+def latest_item() -> ItemRead | None:
+    return service.latest_item()
 
 
-@router.get("/{item_id}/")
-def get_item_by_id(item_id: int):
-    return ok(service.get_item(item_id))
+def get_item(item_id: int) -> ItemRead | None:
+    return service.get_item(item_id)

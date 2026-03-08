@@ -1,16 +1,16 @@
 from repositories.items_repository import ItemsRepository
-from schemas.itemSchemas import CreateItem
+from schemas.itemSchemas import ItemCreate
 
 
 class ItemsService:
     def __init__(self, repository: ItemsRepository | None = None) -> None:
         self.repository = repository or ItemsRepository()
 
-    def create_item(self, item: CreateItem) -> dict:
-        return self.repository.add(item.dict())
+    def create_item(self, item: ItemCreate) -> dict:
+        return self.repository.add(body=item.body)
 
-    def list_items(self) -> list:
-        return self.repository.list_all()
+    def list_items(self, limit: int = 100, offset: int = 0) -> list[dict]:
+        return self.repository.list_all(limit=limit, offset=offset)
 
     def latest_item(self) -> dict | None:
         return self.repository.get_latest()
