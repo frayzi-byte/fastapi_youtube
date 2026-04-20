@@ -11,7 +11,7 @@ DATABASE_URL = f"sqlite:///{DB_DIR}/{DB_FILE}"
 
 engine = create_engine(
     DATABASE_URL,
-    connect_args={"check_same_tread" : False},
+    connect_args={"check_same_thread" : False},
 )
 
 SessionLocal = sessionmaker(
@@ -22,7 +22,7 @@ SessionLocal = sessionmaker(
 
 db = SessionLocal
 
-Base = declarative_base
+Base = declarative_base()
 
 
 def get_db():

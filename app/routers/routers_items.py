@@ -2,13 +2,13 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from typing import List
 
-from core.database import get_db
-from schemas.item_schema import (
+from app.core.database import get_db
+from app.schemas.item_schema import (
     CreateItem,
     ItemUpdate,
     ItemResponse
 )
-from repositories.items_repository import (
+from app.repositories.items_repository import (
     create_item,
     get_items,
     get_item_by_id,
