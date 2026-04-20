@@ -14,3 +14,25 @@ def create_item(db : Session, item : CreateItem):
 def get_items(db : Session):
     return db.query(Item).all()
 
+def get_item_by_id(db : Session, item_id : int):
+    return db.query(Item).filter(Item.id == item_id).first()
+
+def update_item(db : Session, item_id : int, item_data : ItemUpdate):
+    item = db.query(Item).filter(Item.id == item_id).first()
+    if not item:
+        return None
+    
+    item.body = item_data
+
+    db.commit()
+    db.refresh(item)
+    return item
+
+def delete_item(db : Session, item_id : int):
+    item = db.query(Item).filter(Item.id == item_id).first()
+    if not item : 
+        return None
+    
+    db.delete(item)
+    db.commit()
+    return item
