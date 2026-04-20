@@ -4,10 +4,6 @@ from pydantic import BaseModel, EmailStr
 import sqlite3
 
 import uvicorn
-
-conn = sqlite3.connect("database.db")
-cursor = conn.cursor()
-
 from routes.routes_items import router as items_router
 
 app = FastAPI()

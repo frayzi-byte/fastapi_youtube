@@ -1,6 +1,6 @@
 from typing import Annotated
 from fastapi import APIRouter, Path
-from schemas.itemSchemas import CreateItem
+from schemas.item_schema import CreateItem
 from data import items
 
 router = APIRouter(prefix="/items", tags=["Items"])
