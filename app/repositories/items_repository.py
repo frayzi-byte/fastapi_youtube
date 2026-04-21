@@ -22,7 +22,7 @@ def update_item(db : Session, item_id : int, item_data : ItemUpdate):
     if not item:
         return None
     
-    item.body = item_data
+    item.body = item_data.body
 
     db.commit()
     db.refresh(item)
