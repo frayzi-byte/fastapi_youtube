@@ -1,16 +1,17 @@
-from pydantic import BaseModel, EmailStr, Field
+from pydantic import BaseModel
 
 class CreateItem(BaseModel):
-    id: int
-    body: str
+    name : str
+    description: str
 
 class ItemUpdate(BaseModel):
-    id : int
-    body : str
+    name : str
+    description: str
 
 class ItemResponse(BaseModel):
     id : int
-    body : str
+    name : str
+    description: str
 
     class Config:
         from_attributes = True

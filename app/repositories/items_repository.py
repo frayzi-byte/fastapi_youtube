@@ -4,7 +4,8 @@ from app.schemas.item_schema import CreateItem, ItemUpdate
 
 def create_item(db : Session, item : CreateItem):
     db_item = Item(
-        body = item.body
+        name = item.name,
+        description = item.description,
     )
     db.add(db_item)
     db.commit()
@@ -22,7 +23,8 @@ def update_item(db : Session, item_id : int, item_data : ItemUpdate):
     if not item:
         return None
     
-    item.body = item_data.body
+    item.name = item_data.name
+    item.description = item_data.description
 
     db.commit()
     db.refresh(item)
