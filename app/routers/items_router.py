@@ -14,23 +14,26 @@ from app.repositories.items_repository import (
     update_item,
     delete_item
 )
+from app.services.items_service import (
+    get_item_by_id_service,
+    get_all_items_service,
+    post_items_service,
+)
 
 router = APIRouter(prefix="/items", tags=["Items"])
 
-@router.post("/", response_model=ItemResponse)
-def create_new_item(item : CreateItem, db : Session = Depends(get_db)):
-    return create_item(db, item)
-
 @router.get("/", response_model=list[ItemResponse])
 def list_items(db: Session = Depends(get_db)):
-    return get_items(db)
+    return get_all_items_service(db)
 
 @router.get("/{item_id}", response_model=ItemResponse)
 def item_by_id(item_id : int, db : Session = Depends(get_db)):
-    item = get_item_by_id(db, item_id)    
-    if not item :
-        raise HTTPException(status_code=404, detail="Item not found!")
+    item = get_item_by_id_service(db, item_id)    
     return item
+
+@router.post("/", response_model=ItemResponse)
+def create_new_item(item : CreateItem, db : Session = Depends(get_db)):
+    return post_items_service(db, item)
 
 @router.put("/{item_id}", response_model=ItemResponse)
 def edit_item(item_id : int, item : ItemUpdate, db : Session = Depends(get_db)):
