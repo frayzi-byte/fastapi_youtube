@@ -18,6 +18,8 @@ from app.services.items_service import (
     get_item_by_id_service,
     get_all_items_service,
     post_items_service,
+    change_item_service,
+    remove_item_service,
 )
 
 router = APIRouter(prefix="/items", tags=["Items"])
@@ -37,14 +39,14 @@ def create_new_item(item : CreateItem, db : Session = Depends(get_db)):
 
 @router.put("/{item_id}", response_model=ItemResponse)
 def edit_item(item_id : int, item : ItemUpdate, db : Session = Depends(get_db)):
-    updated_item = update_item(db, item_id, item)
+    updated_item = change_item_service(db, item_id, item)
     if not updated_item:
         raise HTTPException(status_code=404, detail="Item not found!")
     return updated_item
 
 @router.delete("/{item_id}", response_model=ItemResponse)
 def remove_item(item_id : int, db : Session = Depends(get_db)):
-    deleted_item = delete_item(db, item_id)
+    deleted_item = remove_item_service(db, item_id)
     if not deleted_item:
         raise HTTPException(status_code=404, detail="Item not found!")
     return deleted_item
