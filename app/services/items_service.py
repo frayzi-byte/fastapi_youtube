@@ -26,18 +26,21 @@ def post_items_service(db, new_item):
     return result_from_db
 
 def change_item_service(db, item_id, item_data):
-
-    if not item_id.name.strip() or item_id.name == "string":
+    
+    # Проверяем новые данные (item_data), которые прислал юзер!
+    if not item_data.name.strip() or item_data.name == "string":
         raise HTTPException(status_code=400, detail="Name is required")
     
     result_from_db = update_item(db, item_id, item_data)
 
     return result_from_db
 
-def remove_item_service(db, item_id):
 
+def remove_item_service(db, item_id):
+    # Тут ты мыслишь абсолютно верно! 
+    # Если цифру не передали, выдаем ошибку.
     if item_id == None:
-        raise HTTPException(status_code=404, detail="Item not found")
+        raise HTTPException(status_code=400, detail="Item ID is required")
     
     result_from_db = delete_item(db, item_id)
 
